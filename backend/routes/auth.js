@@ -1,65 +1,9 @@
 import express from "express"
-import User from "../models/User.js"
-import { body, validationResult } from "express-validator";
+import { body } from "express-validator";
+import {login,signup} from "../controllers/auth.js"
 
 //creating a express router as authentication
 const authRouter = express.Router();
-
-const login = async (req, res) => {
-      try {
-            //checking validation errors
-            const result = validationResult(req);
-            if (!result.isEmpty()) {
-                  return res.status(400).json({ sucess: false, message: "errors", errors: result.errors })
-            }
-
-            //checking wether user already exits or not
-            const { email, password } = req.body;
-            const existingUser = await User.findOne({ email })
-            if (!existingUser) {
-                  return res.status(404).json({ sucess: false, message: "User not exits, Please signup!!" });
-            }
-
-            //cheking for the correct password
-            if (existingUser.password !== password) {
-                  return res.status(400).json({ sucess: false, message: "Wrong Password, try again!!" });
-            }
-
-            //sending response as UserData
-            res.send({ sucess: true, data: existingUser })
-      }
-      catch (e) {
-            console.log(e);
-            res.status(500).json({ sucess: false, message: "Internal Serval Error(ISE) occured" });
-      }
-}
-
-const signup = async (req, res) => {
-      try {
-            //checking validation errors
-            const result = validationResult(req);
-            if (!result.isEmpty()) {
-                  return res.status(400).json({ sucess: false, message: "errors", errors: result.errors })
-            }
-
-            //checking wether user already exits or not
-            const { name, email, password } = req.body;
-            const existingUser = await User.findOne({ email })
-            if (existingUser) {
-                  return res.status(404).json({ sucess: false, message: "User already exits with this email" });
-            }
-
-            //creating a new user then return UserData as response if succefully creted or error otherwise
-            User.create(
-                  req.body
-            ).then(user => res.send(user))
-                  .catch(e => res.status(400).json({ sucess: false, message: "error", error: e.message }))
-      }
-      catch (e) {
-            console.log(e);
-            res.status(500).json({ sucess: false, message: "Internal Serval Error(ISE) occured" });
-      }
-}
 
 //Request: post "authRouter/login" - "api/auth/login"
 authRouter.post("/login", [

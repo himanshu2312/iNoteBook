@@ -2,11 +2,9 @@ import connectToDb from "./db.js";
 import express from "express";
 import authRouter from "./routes/auth.js";
 import notesRouter from "./routes/notes.js";
-import dotenv from "dotenv"
 
 // Conneting to dataBase first
 connectToDb();
-dotenv.config();
 
 //creating a express server
 const app = express();
