@@ -2,6 +2,10 @@ import connectToDb from "./db.js";
 import express from "express";
 import authRouter from "./routes/auth.js";
 import notesRouter from "./routes/notes.js";
+import dotenv from "dotenv";
+
+// configure environment
+dotenv.config();
 
 // Conneting to dataBase first
 connectToDb();

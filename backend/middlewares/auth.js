@@ -1,5 +1,9 @@
 import jwt from "jsonwebtoken"
 
+// declaring secrete key 
+const key = process.env.KEY;
+
+// defining auth middleware
 const auth = (req, res, next) => {
       try {
             // pulling token from request header
@@ -11,7 +15,7 @@ const auth = (req, res, next) => {
             }
 
             // trying to decode the token
-            jwt.verify(token, 'himanshu@iNotebook', function (err, decoded) {
+            jwt.verify(token, key, function (err, decoded) {
                   // setting userId in req object if it's a verified token
                   if (decoded) { req.userId = decoded.userId }
 

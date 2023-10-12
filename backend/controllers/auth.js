@@ -4,6 +4,9 @@ import bcrypt from "bcryptjs"
 import jwt from 'jsonwebtoken'
 import { validationResult } from "express-validator";
 
+// declaring secrete key 
+const key = process.env.KEY;
+
 // User Login EndPoint i.e. "api/auth/login"
 export const login = async (req, res) => {
       try {
@@ -29,7 +32,7 @@ export const login = async (req, res) => {
             }
 
             // creating a User-token with data as UserId
-            const token = jwt.sign({ userId: existingUser._id }, "himanshu@iNotebook");
+            const token = jwt.sign({ userId: existingUser._id }, key);
 
             // sending response as User-token
             res.send({ sucess: true, token: token })
@@ -72,7 +75,7 @@ export const signup = async (req, res) => {
                   .catch(e => res.status(400).json({ sucess: false, message: "error", error: e.message }));
 
             // creating a new User-token as UserId
-            const token = jwt.sign({ userId: newUserId }, "himanshu@iNotebook");
+            const token = jwt.sign({ userId: newUserId }, key);
 
             // sending response as User-token
             res.send({ sucess: true, token: token })
@@ -83,6 +86,7 @@ export const signup = async (req, res) => {
       }
 }
 
+// User details EndPoint i.e. "api/auth/getUser"
 export const getUser = async (req, res) => {
       try {
             // getting userId from req body

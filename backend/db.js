@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv"
+
+// configure environment
+dotenv.config();
 
 //Declaration mogooose URI i.e. Link to dataBase
-const mongoURI = "mongodb://0.0.0.0:27017/iNotebook";
+const mongoURI = process.env.DB_URI;
 
 //Making connection to dataBase URI
 const connectToDb = () => {
