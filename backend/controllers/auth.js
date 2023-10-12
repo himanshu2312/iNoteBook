@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs"
 import jwt from 'jsonwebtoken'
 import { validationResult } from "express-validator";
 
+// User Login EndPoint i.e. "api/auth/login"
 export const login = async (req, res) => {
       try {
             // checking validation errors
@@ -27,16 +28,8 @@ export const login = async (req, res) => {
                   return res.status(400).json({ sucess: false, message: "Wrong Password, try again!!" });
             }
 
-            // creating a User-token
-            const token = jwt.sign({ user:existingUser }, "himanshu@iNotebook");
-
-            // trying to decode the token
-            // jwt.verify(token, 'himanshu@iNotebook', function (err, decoded) {
-            //       if (decoded) { console.log(decoded.user) }
-            //       else {
-            //             console.log(err)
-            //       }
-            // });
+            // creating a User-token with data as UserId
+            const token = jwt.sign({ userId: existingUser._id }, "himanshu@iNotebook");
 
             // sending response as User-token
             res.send({ sucess: true, token: token })
@@ -48,6 +41,7 @@ export const login = async (req, res) => {
       }
 }
 
+// User Sigup EndPoint i.e. "api/auth/signup"
 export const signup = async (req, res) => {
       try {
             // checking validation errors
@@ -72,14 +66,33 @@ export const signup = async (req, res) => {
             console.log("encrypted password", hashedPassword)
 
             // creating a new user if succefully created save in a var or error otherwise
-            var newUser = null;
+            var newUserId = null;
             User.create({ name, email, password: hashedPassword })
-                  .then((user => { newUser = user }))
+                  .then((user => { newUserId = user._id }))
                   .catch(e => res.status(400).json({ sucess: false, message: "error", error: e.message }));
 
-            // creating a new User-token
-            const token = jwt.sign({ user:newUser }, "himanshu@iNotebook");
+            // creating a new User-token as UserId
+            const token = jwt.sign({ userId: newUserId }, "himanshu@iNotebook");
+
+            // sending response as User-token
             res.send({ sucess: true, token: token })
+      }
+      catch (e) {
+            console.log(e);
+            res.status(500).json({ sucess: false, message: "Internal Serval Error(ISE) occured" });
+      }
+}
+
+export const getUser = async (req, res) => {
+      try {
+            // getting userId from req body
+            const userId = req.userId
+
+            // getting user details exept password field
+            const user = await User.findById(userId).select("-password");
+
+            // sending response as userData
+            res.status(200).json({ sucess: true, user: user });
       }
       catch (e) {
             console.log(e);
