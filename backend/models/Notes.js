@@ -4,7 +4,8 @@ import mongoose, { Schema } from "mongoose";
 const NotesSchema = new Schema({
 
       //defining structure attribute or collection attribute
-      tittle: { type: String, require: true },
+      userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+      title: { type: String, require: true },
       desc: { type: String, require: true },
       tag: { type: String, default: "General" },
       date: { type: Date, default: Date.now }

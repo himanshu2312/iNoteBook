@@ -3,7 +3,7 @@ import { body } from "express-validator";
 import { login, signup, getUser } from "../controllers/auth.js"
 import auth from "../middlewares/auth.js";
 
-// creating a express router as authentication
+// creating a express router as authRouter
 const authRouter = express.Router();
 
 // Request: post "authRouter/login" - "api/auth/login"

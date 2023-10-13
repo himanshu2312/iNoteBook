@@ -70,7 +70,7 @@ export const signup = async (req, res) => {
 
             // creating a new user if succefully created save in a var or error otherwise
             var newUserId = null;
-            User.create({ name, email, password: hashedPassword })
+            await User.create({ name, email, password: hashedPassword })
                   .then((user => { newUserId = user._id }))
                   .catch(e => res.status(400).json({ sucess: false, message: "error", error: e.message }));
 
