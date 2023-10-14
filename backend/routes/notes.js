@@ -1,7 +1,7 @@
 import express from "express"
 import { body } from "express-validator";
 import auth from "../middlewares/auth.js";
-import { addNote, fetchNotes } from "../controllers/notes.js";
+import { addNote, fetchNotes, updateNote, deleteNote } from "../controllers/notes.js";
 
 // creating a express router as notesRouter
 const notesRouter = express.Router();
@@ -21,6 +21,19 @@ notesRouter.get("/get",
       //applying customised auth middleware
       auth
       , fetchNotes);
+
+// Request: put "notesRouter/id" - "api/notes/id"
+notesRouter.put("/:id",
+      //applying customised auth middleware
+      auth
+      , updateNote);
+
+// Request: delete "notesRouter/id" - "api/notes/id" 
+notesRouter.delete("/:id",
+      //applying customised auth middleware
+      auth
+      , deleteNote);
+
 
 //export "notesRouther" or "'api/notes's Router"
 export default notesRouter;

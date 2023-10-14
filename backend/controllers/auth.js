@@ -13,14 +13,14 @@ export const login = async (req, res) => {
             // checking validation errors
             const result = validationResult(req);
             if (!result.isEmpty()) {
-                  return res.status(400).json({ sucess: false, message: "errors", errors: result.errors })
+                  return res.status(400).json({ success: false, message: "errors", errors: result.errors })
             }
 
             //checking wether user already exits or not
             const { email, password } = req.body;
             const existingUser = await User.findOne({ email })
             if (!existingUser) {
-                  return res.status(404).json({ sucess: false, message: "User not exits, Please signup!!" });
+                  return res.status(404).json({ success: false, message: "User not exits, Please signup!!" });
             }
 
             // comapring password entered to correct password
@@ -28,19 +28,19 @@ export const login = async (req, res) => {
 
             // cheking for the correct password
             if (!correctPassword) {
-                  return res.status(400).json({ sucess: false, message: "Wrong Password, try again!!" });
+                  return res.status(400).json({ success: false, message: "Wrong Password, try again!!" });
             }
 
             // creating a User-token with data as UserId
             const token = jwt.sign({ userId: existingUser._id }, key);
 
             // sending response as User-token
-            res.send({ sucess: true, token: token })
+            res.send({ success: true, token: token })
 
       }
       catch (e) {
             console.log(e);
-            res.status(500).json({ sucess: false, message: "Internal Serval Error(ISE) occured" });
+            res.status(500).json({ success: false, message: "Internal Serval Error(ISE) occured" });
       }
 }
 
@@ -50,14 +50,14 @@ export const signup = async (req, res) => {
             // checking validation errors
             const result = validationResult(req);
             if (!result.isEmpty()) {
-                  return res.status(400).json({ sucess: false, message: "errors", errors: result.errors })
+                  return res.status(400).json({ success: false, message: "errors", errors: result.errors })
             }
 
             // checking wether user already exits or not
             const { name, email, password } = req.body;
             const existingUser = await User.findOne({ email })
             if (existingUser) {
-                  return res.status(404).json({ sucess: false, message: "User already exits with this email" });
+                  return res.status(404).json({ success: false, message: "User already exits with this email" });
             }
 
             // creating a new salt to encrypt user's password
@@ -72,17 +72,17 @@ export const signup = async (req, res) => {
             var newUserId = null;
             await User.create({ name, email, password: hashedPassword })
                   .then((user => { newUserId = user._id }))
-                  .catch(e => res.status(400).json({ sucess: false, message: "error", error: e.message }));
+                  .catch(e => res.status(400).json({ success: false, message: "error", error: e.message }));
 
             // creating a new User-token as UserId
             const token = jwt.sign({ userId: newUserId }, key);
 
             // sending response as User-token
-            res.send({ sucess: true, token: token })
+            res.send({ success: true, token: token })
       }
       catch (e) {
             console.log(e);
-            res.status(500).json({ sucess: false, message: "Internal Serval Error(ISE) occured" });
+            res.status(500).json({ success: false, message: "Internal Serval Error(ISE) occured" });
       }
 }
 
@@ -96,10 +96,10 @@ export const getUser = async (req, res) => {
             const user = await User.findById(userId).select("-password");
 
             // sending response as userData
-            res.status(200).json({ sucess: true, user: user });
+            res.status(200).json({ success: true, user: user });
       }
       catch (e) {
             console.log(e);
-            res.status(500).json({ sucess: false, message: "Internal Serval Error(ISE) occured" });
+            res.status(500).json({ success: false, message: "Internal Serval Error(ISE) occured" });
       }
 }
