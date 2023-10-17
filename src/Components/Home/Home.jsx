@@ -1,13 +1,13 @@
-import {React, useContext} from 'react'
-import noteContext from '../../Context/notes/NoteContext'
+import { React } from 'react'
+import AddNote from "./AddNote/AddNote"
+import Notes from './Notes/Notes';
 
 export default function Home() {
-      const state = useContext(noteContext);
+
       return (
             <div>
-                  This is Home
-                  <p>Name from the note state is {state.name}</p>
-                  <p>Theme from the note state is {state.theme}</p>
+                  <AddNote />
+                  <Notes />
             </div>
       )
 }
