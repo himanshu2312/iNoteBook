@@ -1,13 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import noteContext from '../../Context/notes/NoteContext'
 
 export default function NavBar() {
       const location = useLocation();
-      const state = useContext(noteContext);
-      state.theme = 'dark';
       return (
-            <nav className={`navbar navbar-expand-lg bg-${state.theme} navbar-${state.theme} fixed-top`}>
+            <nav className={`navbar navbar-expand-lg bg-dark navbar-dark fixed-top`}>
                   <div className="container-fluid">
                         <Link className="navbar-brand" to="/">iNotebook</Link>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -3,13 +3,18 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import NavBar from './Components/NavBar/NavBar';
 import Home from './Components/Home/Home';
 import About from './Components/About/About';
+import Alert from './Components/Alert/Alert';
+import { useContext, useState } from 'react';
+import noteContext from './Context/notes/NoteContext';
 
 function App() {
+  const context = useContext(noteContext)
   return (
     <>
       <Router>
         <NavBar />
-        <div className="container" style={{ marginTop: '5rem' }}>
+        <Alert alert={context.alert} />
+        <div className="container" style={{ marginTop: `${context.alert ? '2' : '5'}rem` }} >
           <Routes>
             <Route path="/" Component={Home} />
             <Route exact path="/about" Component={About} />
