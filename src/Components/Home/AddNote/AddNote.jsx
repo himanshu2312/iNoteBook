@@ -7,17 +7,7 @@ export default function AddNote() {
 
       const handleAddNote = async (e) => {
             e.preventDefault();
-            const result = await context.addNote(Note);
-            if (result) {
-                  context.setAlert({ type: "success", message: "Note Added successfuly!!" })
-                  setNote({ title: "", desc: "", tag: "" })
-            }
-            else {
-                  context.setAlert({ type: "danger", message: "Note Add failed!!" })
-            }
-            setTimeout(() => {
-                  context.setAlert(null);
-            }, 2000);
+            await context.addNote(Note);
       }
 
       const handleChange = (e) => {
@@ -42,7 +32,7 @@ export default function AddNote() {
                               <label htmlFor="tag" className="form-label">Tag</label>
                               <input type="text" className="form-control" id="tag" name="tag" value={Note?.tag} onChange={handleChange} />
                         </div>
-                        <button type="submit" className="btn btn-success">Submit</button>
+                        <button type="submit" className="btn btn-success">Add Note</button>
                   </form>
             </div>
       )

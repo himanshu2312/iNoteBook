@@ -4,6 +4,7 @@ import { validationResult } from "express-validator";
 // Notes add EndPoint i.e. "api/notes/add"
 export const addNote = async (req, res) => {
       try {
+
             // checking validation errors
             const result = validationResult(req);
             if (!result.isEmpty()) {
@@ -98,7 +99,7 @@ export const deleteNote = async (req, res) => {
             }
 
             await Notes.findByIdAndDelete(id)
-                  .then(res.status(200).json({ success: true, message: "Note successfuly deleted!!" }))
+                  .then(note => res.status(200).json({ success: true, note: note }))
                   .catch(e => res.status(400).json({ success: false, message: "error", error: e.message }))
 
       } catch (e) {
