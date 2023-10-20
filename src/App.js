@@ -4,11 +4,15 @@ import NavBar from './Components/NavBar/NavBar';
 import Home from './Components/Home/Home';
 import About from './Components/About/About';
 import Alert from './Components/Alert/Alert';
-import { useContext} from 'react';
+import { useContext, useEffect} from 'react';
 import noteContext from './Context/notes/NoteContext';
 
 function App() {
   const context = useContext(noteContext)
+  useEffect(() => {
+    context.fetchNotes()
+    // eslint-disable-next-line
+}, [])
   return (
     <>
       <Router>

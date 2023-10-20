@@ -30,16 +30,11 @@ const NoteState = (props) => {
             }
       }
 
-      useEffect(() => {
-            console.log("loading...")
-            fetchNotes()
-            // eslint-disable-next-line
-      }, [])
-
       // defining app state variable
       const [notes, setNotes] = useState(null);
       const [Alert, setAlert] = useState(null);
       const [userToken, setUserToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI3YzZiZmM2NTY1YzNhOTc5NjRjMDMiLCJpYXQiOjE2OTczNjg5NTl9.ZgIXTN9l8NXXjVE6LxjG3yqG6oe0BIq40za4R_9zSNk');
+      // const [userToken, setUserToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTMyNDhjZDA2NzFlY2ZlM2VkOWU5NWEiLCJpYXQiOjE2OTc3OTQyNTN9.OP0WwWpzenjIyIJ3Css-OD_-RzzMp1Pbqi4OhUmhZBs');
       const [loading, setloading] = useState(true);
 
       // Add note method
@@ -67,12 +62,18 @@ const NoteState = (props) => {
             if (result.success) {
                   setNotes(notes.concat(result.note))
                   setAlert({ type: "success", message: "Note Added successfully" })
+                  setTimeout(() => {
+                        setAlert(null);
+                  }, 2000);
+                  return true;
             } else {
                   handleExecption(result);
+                  setTimeout(() => {
+                        setAlert(null);
+                  }, 2000);
+                  return false;
             }
-            setTimeout(() => {
-                  setAlert(null);
-            }, 2000);
+            
 
       }
 

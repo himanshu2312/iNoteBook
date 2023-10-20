@@ -10,8 +10,7 @@ export default function Alert(props) {
                   className={`alert alert-${props.alert.type} alert-dismissible fade show `}
                   role="alert" style={{ marginTop: '3.5rem' }} id="alert"
             >
-                  <strong>{capt(props.alert.type)}</strong>: {props.alert.message}
-
+                  {props.alert.message}
             </div>
       );
 }

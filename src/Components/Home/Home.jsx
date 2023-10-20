@@ -3,11 +3,10 @@ import AddNote from "./AddNote/AddNote"
 import Notes from './Notes/Notes';
 
 export default function Home() {
-
       return (
             <div>
                   <AddNote />
-                  <Notes />
+                  <Notes/>
             </div>
       )
 }

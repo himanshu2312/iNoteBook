@@ -7,7 +7,10 @@ export default function AddNote() {
 
       const handleAddNote = async (e) => {
             e.preventDefault();
-            await context.addNote(Note);
+            const result = await context.addNote(Note);
+            if (result) {
+                  setNote({ title: "", desc: "", tag: "" })
+            }
       }
 
       const handleChange = (e) => {
@@ -32,7 +35,7 @@ export default function AddNote() {
                               <label htmlFor="tag" className="form-label">Tag</label>
                               <input type="text" className="form-control" id="tag" name="tag" value={Note?.tag} onChange={handleChange} />
                         </div>
-                        <button type="submit" className="btn btn-success">Add Note</button>
+                        <button type="submit" className="btn btn-success">ADD</button>
                   </form>
             </div>
       )
