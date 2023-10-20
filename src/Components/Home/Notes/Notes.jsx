@@ -1,4 +1,4 @@
-import { React, useContext, useRef,useState } from 'react'
+import { React, useContext, useRef, useState } from 'react'
 import noteContext from '../../../Context/notes/NoteContext'
 import NoteItem from './NoteItem';
 import Spinner from "../../Spinner/Spinner"
@@ -6,9 +6,10 @@ import Modal from "./Modal"
 
 export default function Notes() {
       const modalRef = useRef()
-      const [current, setCurrent] = useState(null);
+      const [currentNote, setcurrentNote] = useState({ title: "", desc: "", tag: "" })
 
-      const openModel = () => {
+      const updateNote = (note) => {
+            setcurrentNote(note)
             modalRef.current.click()
       }
 
@@ -17,16 +18,17 @@ export default function Notes() {
             <div className='container mt-5'>
                   <h2>Your Notes</h2>
                   {context.loading && <Spinner />}
-                  <div className='row my-4'>
+                  <div className='container row my-4'>
+                        { context?.notes?.length===0 && <p>No notes to display</p>}
                         {
                               context?.notes?.map((note, index) => {
                                     return (
-                                          <NoteItem note={note} key={index} updateNote={openModel} setCurrent={setCurrent}/>
+                                          <NoteItem note={note} key={index} updateNote={updateNote} />
                                     )
                               })
                         }
                   </div>
-                  <Modal modalRef={modalRef} current={current} />
+                  <Modal modalRef={modalRef} currentNote={currentNote} setcurrentNote={setcurrentNote} />
             </div>
       )
 }

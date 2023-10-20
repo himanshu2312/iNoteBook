@@ -31,7 +31,7 @@ const NoteState = (props) => {
       }
 
       // defining app state variable
-      const [notes, setNotes] = useState(null);
+      const [notes, setNotes] = useState([]);
       const [Alert, setAlert] = useState(null);
       const [userToken, setUserToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI3YzZiZmM2NTY1YzNhOTc5NjRjMDMiLCJpYXQiOjE2OTczNjg5NTl9.ZgIXTN9l8NXXjVE6LxjG3yqG6oe0BIq40za4R_9zSNk');
       // const [userToken, setUserToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTMyNDhjZDA2NzFlY2ZlM2VkOWU5NWEiLCJpYXQiOjE2OTc3OTQyNTN9.OP0WwWpzenjIyIJ3Css-OD_-RzzMp1Pbqi4OhUmhZBs');

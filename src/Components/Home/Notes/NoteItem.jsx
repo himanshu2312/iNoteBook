@@ -1,13 +1,12 @@
 import React, { useContext } from 'react'
 import noteContext from '../../../Context/notes/NoteContext'
 
-export default function NoteItem({ note, updateNote, setCurrent }) {
+export default function NoteItem({ note, updateNote, }) {
   const context = useContext(noteContext);
   const { deleteNote } = context;
 
   const handleEdit = () => {
-    setCurrent(note)
-    updateNote()
+    updateNote(note)
   }
 
   return (

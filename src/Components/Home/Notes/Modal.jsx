@@ -1,17 +1,17 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import noteContext from '../../../Context/notes/NoteContext';
 
-export default function Modal({ modalRef, currentNote: current }) {
-      const [Note, setNote] = useState({ title: current.title, desc: current.desc, tag: current.tag });
+export default function Modal({ modalRef, currentNote, setcurrentNote }) {
       const context = useContext(noteContext);
 
       const handleUpdateNote = async (e) => {
             e.preventDefault();
-            await context.editNote(current._id, Note);
+            await context.editNote(currentNote._id, { title: currentNote.title, desc: currentNote.desc, tag: currentNote.tag });
+
       }
 
       const handleChange = (e) => {
-            setNote({ ...Note, [e.target.name]: e.target.value })
+            setcurrentNote({ ...currentNote, [e.target.name]: e.target.value })
       }
       return (
             <div>
@@ -29,23 +29,23 @@ export default function Modal({ modalRef, currentNote: current }) {
                                           <form>
                                                 <div className="mb-3">
                                                       <label htmlFor="title" className="form-label">Title</label>
-                                                      <input type="text" className="form-control" id="title" name="title" aria-describedby="titleHelp" value={Note?.title} onChange={handleChange} />
+                                                      <input type="text" className="form-control" id="title" name="title" aria-describedby="titleHelp" value={currentNote?.title} onChange={handleChange} />
                                                       <div id="titleHelp" className="form-text">Title must contains atleast 3 Characters.</div>
                                                 </div>
                                                 <div className="mb-3">
                                                       <label htmlFor="desc" className="form-label">Description</label>
-                                                      <input type="text" className="form-control" id="desc" name="desc" aria-describedby="descHelp" value={Note?.desc} onChange={handleChange} />
+                                                      <input type="text" className="form-control" id="desc" name="desc" aria-describedby="descHelp" value={currentNote?.desc} onChange={handleChange} />
                                                       <div id="descHelp" className="form-text">Description must contains atleast 5 Characters.</div>
                                                 </div>
                                                 <div className="mb-3">
                                                       <label htmlFor="tag" className="form-label">Tag</label>
-                                                      <input type="text" className="form-control" id="tag" name="tag" value={Note?.tag} onChange={handleChange} />
+                                                      <input type="text" className="form-control" id="tag" name="tag" value={currentNote?.tag} onChange={handleChange} />
                                                 </div>
                                           </form>
                                     </div>
                                     <div className="modal-footer">
                                           <button type="button" className="btn btn-danger " data-bs-dismiss="modal">Cancle</button>
-                                          <button type="button" className="btn btn-success" onClick={handleUpdateNote}>Update</button>
+                                          <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleUpdateNote}>Update</button>
                                     </div>
                               </div>
                         </div>
