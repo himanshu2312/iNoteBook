@@ -62,11 +62,11 @@ export const signup = async (req, res) => {
 
             // creating a new salt to encrypt user's password
             const salt = await bcrypt.genSalt(8);
-            console.log("salt", salt)
+            // console.log("salt", salt)
 
             // encrypting user's password using created salt
             const hashedPassword = await bcrypt.hash(password, salt);
-            console.log("encrypted password", hashedPassword)
+            // console.log("encrypted password", hashedPassword)
 
             // creating a new user if succefully created save in a var or error otherwise
             var newUserId = null;

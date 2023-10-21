@@ -35,7 +35,7 @@ export default function AddNote() {
                               <label htmlFor="tag" className="form-label">Tag</label>
                               <input type="text" className="form-control" id="tag" name="tag" value={Note?.tag} onChange={handleChange} />
                         </div>
-                        <button type="submit" className="btn btn-success">ADD</button>
+                        <button type="submit" className="btn btn-primary">ADD</button>
                   </form>
             </div>
       )

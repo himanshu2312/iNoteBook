@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import noteContext from '../../../Context/notes/NoteContext';
 
-export default function Modal({ modalRef, currentNote, setcurrentNote }) {
+export default function UpdateModal({ modalRef, currentNote, setcurrentNote }) {
       const context = useContext(noteContext);
 
       const handleUpdateNote = async (e) => {
@@ -44,8 +44,8 @@ export default function Modal({ modalRef, currentNote, setcurrentNote }) {
                                           </form>
                                     </div>
                                     <div className="modal-footer">
-                                          <button type="button" className="btn btn-danger " data-bs-dismiss="modal">Cancle</button>
-                                          <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleUpdateNote}>Update</button>
+                                          <button type="button" className="btn btn-secondary " data-bs-dismiss="modal">Cancel</button>
+                                          <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleUpdateNote}>Update</button>
                                     </div>
                               </div>
                         </div>

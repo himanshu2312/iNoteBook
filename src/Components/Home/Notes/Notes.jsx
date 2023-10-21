@@ -2,7 +2,7 @@ import { React, useContext, useRef, useState } from 'react'
 import noteContext from '../../../Context/notes/NoteContext'
 import NoteItem from './NoteItem';
 import Spinner from "../../Spinner/Spinner"
-import Modal from "./Modal"
+import UpdateModal from "./UpdateModal"
 
 export default function Notes() {
       const modalRef = useRef()
@@ -28,7 +28,7 @@ export default function Notes() {
                               })
                         }
                   </div>
-                  <Modal modalRef={modalRef} currentNote={currentNote} setcurrentNote={setcurrentNote} />
+                  <UpdateModal modalRef={modalRef} currentNote={currentNote} setcurrentNote={setcurrentNote} />
             </div>
       )
 }

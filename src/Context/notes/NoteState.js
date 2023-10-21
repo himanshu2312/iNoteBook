@@ -1,5 +1,5 @@
 import NoteContext from "./NoteContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const NoteState = (props) => {
 
@@ -16,7 +16,7 @@ const NoteState = (props) => {
                   method: 'GET',
                   headers: {
                         'Content-Type': 'application/json',
-                        'token': userToken
+                        'token': localStorage.getItem('token')
                   }
             })
             const result = await response.json()
@@ -31,10 +31,8 @@ const NoteState = (props) => {
       }
 
       // defining app state variable
-      const [notes, setNotes] = useState([]);
+      const [notes, setNotes] = useState(null);
       const [Alert, setAlert] = useState(null);
-      const [userToken, setUserToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI3YzZiZmM2NTY1YzNhOTc5NjRjMDMiLCJpYXQiOjE2OTczNjg5NTl9.ZgIXTN9l8NXXjVE6LxjG3yqG6oe0BIq40za4R_9zSNk');
-      // const [userToken, setUserToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTMyNDhjZDA2NzFlY2ZlM2VkOWU5NWEiLCJpYXQiOjE2OTc3OTQyNTN9.OP0WwWpzenjIyIJ3Css-OD_-RzzMp1Pbqi4OhUmhZBs');
       const [loading, setloading] = useState(true);
 
       // Add note method
@@ -50,7 +48,7 @@ const NoteState = (props) => {
                   method: 'POST',
                   headers: {
                         'Content-Type': 'application/json',
-                        'token': userToken
+                        'token': localStorage.getItem('token')
                   },
                   body: JSON.stringify(noteData)
             })
@@ -73,7 +71,7 @@ const NoteState = (props) => {
                   }, 2000);
                   return false;
             }
-            
+
 
       }
 
@@ -92,7 +90,7 @@ const NoteState = (props) => {
                   method: 'DELETE',
                   headers: {
                         'Content-Type': 'application/json',
-                        'token': userToken
+                        'token': localStorage.getItem('token')
                   }
             })
 
@@ -112,6 +110,8 @@ const NoteState = (props) => {
             }, 2000);
       }
 
+
+
       // Edit/Update note method
       // requires note Id in params and User token inside header
       const editNote = async (noteId, newNoteData) => {
@@ -124,7 +124,7 @@ const NoteState = (props) => {
                   method: 'PUT',
                   headers: {
                         'Content-Type': 'application/json',
-                        'token': userToken
+                        'token': localStorage.getItem('token')
                   },
                   body: JSON.stringify(newNoteData)
             })
@@ -134,7 +134,7 @@ const NoteState = (props) => {
 
             // updating Notes  and setAlert
             if (result.success) {
-                  setNotes(notes.map(note=>note._id===result.note._id?result.note:note))
+                  setNotes(notes.map(note => note._id === result.note._id ? result.note : note))
                   setAlert({ type: "success", message: "Note Updated successfully" })
             } else {
                   handleExecption(result);
@@ -142,6 +142,76 @@ const NoteState = (props) => {
             setTimeout(() => {
                   setAlert(null);
             }, 2000);
+      }
+
+      // Login method
+      const login = async (userData) => {
+            // creating api url to fetch
+            const url = `${host}/api/auth/login`
+
+            // fetching API url
+            const response = await fetch(
+                  url, {
+                  method: 'POST',
+                  headers: {
+                        'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(userData)
+            })
+
+            // extracting json from url 
+            const result = await response.json()
+
+            // updating Notes  and setAlert
+            if (result.success) {
+                  localStorage.setItem('token',result.token);
+                  setAlert({ type: "success", message: "Logged-in successfully!!" })
+                  setTimeout(() => {
+                        setAlert(null);
+                  }, 2000);
+                  return true;
+            } else {
+                  handleExecption(result);
+                  setTimeout(() => {
+                        setAlert(null);
+                  }, 2000);
+                  return false;
+            }
+      }
+
+      // SignUp method
+      const signup = async (userData) => {
+            // creating api url to fetch
+            const url = `${host}/api/auth/signup`
+
+            // fetching API url
+            const response = await fetch(
+                  url, {
+                  method: 'POST',
+                  headers: {
+                        'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(userData)
+            })
+
+            // extracting json from url 
+            const result = await response.json()
+
+            // updating Notes  and setAlert
+            if (result.success) {
+                  localStorage.setItem('token',result.token);
+                  setAlert({ type: "success", message: "Signupped successfully!!" })
+                  setTimeout(() => {
+                        setAlert(null);
+                  }, 2000);
+                  return true;
+            } else {
+                  handleExecption(result);
+                  setTimeout(() => {
+                        setAlert(null);
+                  }, 2000);
+                  return false;
+            }
       }
 
 
@@ -165,7 +235,7 @@ const NoteState = (props) => {
       return (
 
             // wrapping the whole children inside contextProvide and make below value available to all
-            <NoteContext.Provider value={{ notes, Alert, setNotes, setAlert, userToken, setUserToken, editNote, addNote, deleteNote, fetchNotes, loading }}>
+            <NoteContext.Provider value={{ notes, Alert, editNote, addNote, deleteNote, fetchNotes, loading, login, signup }}>
                   {props.children}
             </NoteContext.Provider>
       )
