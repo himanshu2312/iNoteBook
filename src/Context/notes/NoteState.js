@@ -11,28 +11,37 @@ const NoteState = (props) => {
       const fetchNotes = async () => {
             setloading(true);
             const url = `${host}/api/notes/get`
-            const response = await fetch(
-                  url, {
-                  method: 'GET',
-                  headers: {
-                        'Content-Type': 'application/json',
-                        'token': localStorage.getItem('token')
-                  }
-            })
-            const result = await response.json()
+            try {
+                  const response = await fetch(
+                        url, {
+                        method: 'GET',
+                        headers: {
+                              'Content-Type': 'application/json',
+                              'token': localStorage.getItem('token')
+                        }
+                  })
+                  const result = await response.json()
 
-            if (result.success) {
-                  setNotes(result.notes);
-                  setloading(false);
+                  if (result.success) {
+                        setNotes(result.notes);
+                        setloading(false);
+                  }
+                  else {
+                        handleExecption(result);
+                  }
             }
-            else {
-                  handleExecption(result);
+            catch (e) {
+                  handleExecption({ message: e.message })
+                  setTimeout(() => {
+                        setAlert(null);
+                  }, 2000);
             }
       }
 
       // defining app state variable
       const [notes, setNotes] = useState(null);
       const [Alert, setAlert] = useState(null);
+      const [user, setuser] = useState(null);
       const [loading, setloading] = useState(true);
 
       // Add note method
@@ -48,7 +57,7 @@ const NoteState = (props) => {
                   method: 'POST',
                   headers: {
                         'Content-Type': 'application/json',
-                        'token': localStorage.getItem('token')
+                        'token': user
                   },
                   body: JSON.stringify(noteData)
             })
@@ -90,7 +99,7 @@ const NoteState = (props) => {
                   method: 'DELETE',
                   headers: {
                         'Content-Type': 'application/json',
-                        'token': localStorage.getItem('token')
+                        'token': user
                   }
             })
 
@@ -124,7 +133,7 @@ const NoteState = (props) => {
                   method: 'PUT',
                   headers: {
                         'Content-Type': 'application/json',
-                        'token': localStorage.getItem('token')
+                        'token': user
                   },
                   body: JSON.stringify(newNoteData)
             })
@@ -150,28 +159,38 @@ const NoteState = (props) => {
             const url = `${host}/api/auth/login`
 
             // fetching API url
-            const response = await fetch(
-                  url, {
-                  method: 'POST',
-                  headers: {
-                        'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify(userData)
-            })
+            try {
+                  console.log(userData)
+                  const response = await fetch(
+                        url, {
+                        method: 'POST',
+                        headers: {
+                              'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(userData)
+                  })
 
-            // extracting json from url 
-            const result = await response.json()
+                  // extracting json from url 
+                  const result = await response.json()
 
-            // updating Notes  and setAlert
-            if (result.success) {
-                  localStorage.setItem('token',result.token);
-                  setAlert({ type: "success", message: "Logged-in successfully!!" })
-                  setTimeout(() => {
-                        setAlert(null);
-                  }, 2000);
-                  return true;
-            } else {
-                  handleExecption(result);
+                  // updating Notes  and setAlert
+                  if (result.success) {
+                        localStorage.setItem('token', result.token);
+                        setuser(result.token.toString())
+                        setAlert({ type: "success", message: "Logged-in successfully!!" })
+                        setTimeout(() => {
+                              setAlert(null);
+                        }, 2000);
+                        return true;
+                  } else {
+                        handleExecption(result);
+                        setTimeout(() => {
+                              setAlert(null);
+                        }, 2000);
+                        return false;
+                  }
+            } catch (e) {
+                  handleExecption({ message: e.message })
                   setTimeout(() => {
                         setAlert(null);
                   }, 2000);
@@ -199,7 +218,9 @@ const NoteState = (props) => {
 
             // updating Notes  and setAlert
             if (result.success) {
-                  localStorage.setItem('token',result.token);
+                  localStorage.setItem('token', result.token);
+                  setuser(result.token.toString())
+                  console.log(user)
                   setAlert({ type: "success", message: "Signupped successfully!!" })
                   setTimeout(() => {
                         setAlert(null);
@@ -235,7 +256,7 @@ const NoteState = (props) => {
       return (
 
             // wrapping the whole children inside contextProvide and make below value available to all
-            <NoteContext.Provider value={{ notes, Alert, editNote, addNote, deleteNote, fetchNotes, loading, login, signup }}>
+            <NoteContext.Provider value={{ notes, Alert, editNote, addNote, deleteNote, fetchNotes, loading, login, signup, setuser, user }}>
                   {props.children}
             </NoteContext.Provider>
       )

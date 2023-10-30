@@ -4,13 +4,20 @@ import NavBar from './Components/NavBar/NavBar';
 import Home from './Components/Home/Home';
 import About from './Components/About/About';
 import Alert from './Components/Alert/Alert';
-import { useContext} from 'react';
+import { useContext, useEffect } from 'react';
 import noteContext from './Context/notes/NoteContext';
 import Login from './Components/Login/Login';
 import Signup from './Components/Signup/Signup';
 
 function App() {
   const context = useContext(noteContext)
+  const { setuser } = context;
+
+  useEffect(() => {
+    if (localStorage.getItem('token'))
+      setuser(localStorage.getItem('token'))
+  })
+
 
   return (
     <>

@@ -4,13 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
       const navigate=useNavigate();
-      const [user, setUser] = useState({ email: "", password: "" });
+      const [User, setUser] = useState({ email: "", password: "" });
       const context = useContext(noteContext);
 
       const handleLogin = async (e) => {
             e.preventDefault();
-            // console.log(user)
-            const result = await context.login(user);
+            const result = await context.login(User);
             if (result) {
                   setUser({ email: "", password: "" })
                   setTimeout(() => {
@@ -20,7 +19,7 @@ const Login = () => {
       }
 
       const handleChange = (e) => {
-            setUser({ ...user, [e.target.name]: e.target.value })
+            setUser({ ...User, [e.target.name]: e.target.value })
       }
 
       return (
@@ -28,11 +27,11 @@ const Login = () => {
                   <form className='mt-3' onSubmit={handleLogin}>
                         <div className="mb-3">
                               <label htmlFor="email" className="form-label">Email</label>
-                              <input type="email" className="form-control" autoComplete='username' id="email" name="email" value={user?.email} onChange={handleChange} />
+                              <input type="email" className="form-control" autoComplete='username' id="email" name="email" value={User?.email} onChange={handleChange} />
                         </div>
                         <div className="mb-3">
                               <label htmlFor="password" className="form-label">Password</label>
-                              <input type="password" autoComplete="current-password" className="form-control" id="password" name="password" aria-describedby="passwordHelp" value={user?.password} onChange={handleChange} />
+                              <input type="password" autoComplete="current-password" className="form-control" id="password" name="password" aria-describedby="passwordHelp" value={User?.password} onChange={handleChange} />
                               <div id="passwordHelp" className="form-text">Password must contains atleast 4 Characters.</div>
                         </div>
                         <button type="submit" className="btn btn-primary my-3">LOGIN</button>

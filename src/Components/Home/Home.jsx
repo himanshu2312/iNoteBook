@@ -6,22 +6,24 @@ import noteContext from '../../Context/notes/NoteContext';
 
 export default function Home() {
       const navigate = useNavigate();
-      const context=useContext(noteContext);
+      const context = useContext(noteContext);
+      const { fetchNotes, user } = context
 
       useEffect(() => {
-            if(!localStorage.getItem('token')) {
+            if (localStorage.getItem('token')) {
+                  fetchNotes();
+            } else {
                   setTimeout(() => {
                         navigate("/login")
                   }, 3000)
-            }else{
-                  context.fetchNotes();
             }
-      })
+            // eslint-disable-next-line
+      }, [user, navigate])
 
       return (
             <>
                   {
-                        localStorage.getItem('token') ?
+                        user ?
                               <div>
                                     <AddNote />
                                     <Notes />

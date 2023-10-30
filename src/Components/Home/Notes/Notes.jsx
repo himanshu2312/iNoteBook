@@ -17,17 +17,17 @@ export default function Notes() {
       return (
             <div className='container mt-5'>
                   <h2>Your Notes</h2>
-                  {context.loading && <Spinner />}
-                  <div className='container row my-4'>
-                        { context?.notes?.length===0 && <p>No notes to display</p>}
-                        {
-                              context?.notes?.map((note, index) => {
-                                    return (
-                                          <NoteItem note={note} key={index} updateNote={updateNote} />
-                                    )
-                              })
-                        }
-                  </div>
+                  {context.loading ? <Spinner /> :
+                        <div className='container row my-4'>
+                              {context?.notes?.length === 0 && <p>No notes to display</p>}
+                              {
+                                    context?.notes?.map((note, index) => {
+                                          return (
+                                                <NoteItem note={note} key={index} updateNote={updateNote} />
+                                          )
+                                    })
+                              }
+                        </div>}
                   <UpdateModal modalRef={modalRef} currentNote={currentNote} setcurrentNote={setcurrentNote} />
             </div>
       )

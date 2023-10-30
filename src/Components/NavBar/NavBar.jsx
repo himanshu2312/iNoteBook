@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import noteContext from '../../Context/notes/NoteContext';
 
 export default function NavBar() {
       const location = useLocation();
       const navigate = useNavigate();
+      const context = useContext(noteContext)
 
       const handleLogout = () => {
             localStorage.removeItem('token')
+            context.setuser(null)
             navigate("/login")
       }
       return (
@@ -27,7 +30,7 @@ export default function NavBar() {
                               </ul>
                               <div className="d-flex">
                                     {
-                                          localStorage.getItem('token') ?
+                                          context.user ?
                                                 <button className="btn btn-primary" onClick={handleLogout}>Logout</button>
                                                 :
                                                 <>
