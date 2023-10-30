@@ -3,6 +3,7 @@ import noteContext from '../../Context/notes/NoteContext';
 import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
+      document.title="SignUp | iNoteBook"
       const navigate=useNavigate();
       const [user, setUser] = useState({ name:"", email: "", password: "" });
       const context = useContext(noteContext);

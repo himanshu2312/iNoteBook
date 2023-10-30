@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import noteContext from '../../Context/notes/NoteContext';
 
 export default function Home() {
+      document.title="iNoteBook"
       const navigate = useNavigate();
       const context = useContext(noteContext);
       const { fetchNotes, user } = context

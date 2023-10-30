@@ -18,7 +18,6 @@ function App() {
       setuser(localStorage.getItem('token'))
   })
 
-
   return (
     <>
       <Router>
