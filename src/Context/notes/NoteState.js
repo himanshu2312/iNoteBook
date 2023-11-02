@@ -4,7 +4,7 @@ import { useState } from "react";
 const NoteState = (props) => {
 
       //defining api base url
-      const host = "http://localhost:5000"
+      const host = "https://i-notebook-2312.onrender.com"
 
       // Fetch notes method
       // requires User token inside header
@@ -160,7 +160,6 @@ const NoteState = (props) => {
 
             // fetching API url
             try {
-                  console.log(userData)
                   const response = await fetch(
                         url, {
                         method: 'POST',
