@@ -1,6 +1,6 @@
 # Appplication is live :
 
-[iNoteBook App](https://i-notebook-2312.netlify.app).
+[iNoteBook App](https://i-notebook-2312.netlify.app)
 
 # Getting Started with Create React App
 
