@@ -28,10 +28,12 @@ const NoteState = (props) => {
                   }
                   else {
                         handleExecption(result);
+                        setloading(false)
                   }
             }
             catch (e) {
                   handleExecption({ message: e.message })
+                  setloading(false)
                   setTimeout(() => {
                         setAlert(null);
                   }, 2000);
@@ -42,7 +44,7 @@ const NoteState = (props) => {
       const [notes, setNotes] = useState(null);
       const [Alert, setAlert] = useState(null);
       const [user, setuser] = useState(null);
-      const [loading, setloading] = useState(true);
+      const [loading, setloading] = useState(false);
 
       // Add note method
       // requires User token inside header
@@ -155,6 +157,8 @@ const NoteState = (props) => {
 
       // Login method
       const login = async (userData) => {
+            setloading(true)
+
             // creating api url to fetch
             const url = `${host}/api/auth/login`
 
@@ -177,12 +181,14 @@ const NoteState = (props) => {
                         localStorage.setItem('token', result.token);
                         setuser(result.token.toString())
                         setAlert({ type: "success", message: "Logged-in successfully!!" })
+                        setloading(false)
                         setTimeout(() => {
                               setAlert(null);
                         }, 2000);
                         return true;
                   } else {
                         handleExecption(result);
+                        setloading(false)
                         setTimeout(() => {
                               setAlert(null);
                         }, 2000);
@@ -190,6 +196,7 @@ const NoteState = (props) => {
                   }
             } catch (e) {
                   handleExecption({ message: e.message })
+                  setloading(false)
                   setTimeout(() => {
                         setAlert(null);
                   }, 2000);
@@ -199,6 +206,8 @@ const NoteState = (props) => {
 
       // SignUp method
       const signup = async (userData) => {
+            setloading(true)
+
             // creating api url to fetch
             const url = `${host}/api/auth/signup`
 
@@ -219,14 +228,15 @@ const NoteState = (props) => {
             if (result.success) {
                   localStorage.setItem('token', result.token);
                   setuser(result.token.toString())
-                  console.log(user)
                   setAlert({ type: "success", message: "Signupped successfully!!" })
+                  setloading(false)
                   setTimeout(() => {
                         setAlert(null);
                   }, 2000);
                   return true;
             } else {
                   handleExecption(result);
+                  setloading(false)
                   setTimeout(() => {
                         setAlert(null);
                   }, 2000);
