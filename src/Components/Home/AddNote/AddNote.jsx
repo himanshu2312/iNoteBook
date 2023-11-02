@@ -19,8 +19,8 @@ export default function AddNote() {
 
       return (
             <div className="container">
-                  <h2>Add Note</h2>
-                  <form className='mt-3' onSubmit={handleAddNote}>
+                  <h3 style={{textAlign:"center"}}>Add Note</h3>
+                  <form className='mt-3 mb-5' onSubmit={handleAddNote}>
                         <div className="mb-3">
                               <label htmlFor="title" className="form-label">Title</label>
                               <input type="text" className="form-control" id="title" name="title" aria-describedby="titleHelp" value={Note?.title} onChange={handleChange} />

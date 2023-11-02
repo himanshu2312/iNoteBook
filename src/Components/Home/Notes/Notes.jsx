@@ -16,7 +16,7 @@ export default function Notes() {
       const context = useContext(noteContext);
       return (
             <div className='container mt-5'>
-                  <h2>Your Notes</h2>
+                  <h2 style={{textAlign:"center"}}>Your Notes</h2>
                   {context.loading ? <Spinner /> :
                         <div className='container row my-4'>
                               {context?.notes?.length === 0 && <p>No notes to display</p>}

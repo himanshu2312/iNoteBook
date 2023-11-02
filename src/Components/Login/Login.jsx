@@ -25,14 +25,15 @@ const Login = () => {
 
       return (
             <div className='container'>
+                  <h3 style={{textAlign:"center"}}>Login to continue with <span className='text-primary'>iNoteBook</span></h3>
                   <form className='mt-3' onSubmit={handleLogin}>
                         <div className="mb-3">
                               <label htmlFor="email" className="form-label">Email</label>
-                              <input type="email" className="form-control" autoComplete='username' id="email" name="email" value={User?.email} onChange={handleChange} />
+                              <input type="email" className="form-control" autoComplete='username' required id="email" name="email" value={User?.email} onChange={handleChange} />
                         </div>
                         <div className="mb-3">
                               <label htmlFor="password" className="form-label">Password</label>
-                              <input type="password" autoComplete="current-password" className="form-control" id="password" name="password" aria-describedby="passwordHelp" value={User?.password} onChange={handleChange} />
+                              <input type="password" autoComplete="current-password" required minLength={4} className="form-control" id="password" name="password" aria-describedby="passwordHelp" value={User?.password} onChange={handleChange} />
                               <div id="passwordHelp" className="form-text">Password must contains atleast 4 Characters.</div>
                         </div>
                         <button type="submit" className="btn btn-primary my-3">LOGIN</button>

@@ -26,8 +26,8 @@ export default function Home() {
                   {
                         user ?
                               <div>
-                                    <AddNote />
                                     <Notes />
+                                    <AddNote />
                               </div> :
                               <div className='conatiner text-center'>
                                     <h3>Login Required</h3>
