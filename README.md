@@ -2,7 +2,7 @@
 [iNoteBook App](https://i-notebook-2312.netlify.app)
 
 ## NOTE:
-This API may take some time for the first time to give a response as it is hosted on an unpaid platform.
+This API may take some time for the first time to give a response as it is hosted on an unpaid platform. But the UI will work fine
 
 # Getting Started with Create React App
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
