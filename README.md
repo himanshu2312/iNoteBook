@@ -13,5 +13,6 @@ This API may take some time for the first time to give a response as it is hoste
 - Redux
 - Visual Studio Code
 - Nodemon
+- Bootstrap
 
 Made by [@Himanshu](https://www.linkedin.com/in/himanshu2312/)
